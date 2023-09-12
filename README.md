@@ -1,6 +1,9 @@
-# Example of excalidraw collaboration server
 
-Collaboration server for Excalidraw
+# Ever Teams Whiteboard Server
+
+This repo is a modified fork of https://github.com/excalidraw/excalidraw-room (Copyright (c) 2020 Excalidraw, [MIT license](https://github.com/excalidraw/excalidraw-room/blob/master/LICENSE))
+
+Collaboration server for Whiteboards.
 
 If you need to use cluster mode with pm2. Checkout: https://socket.io/docs/v4/pm2/
 
