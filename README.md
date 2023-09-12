@@ -9,6 +9,10 @@ If you need to use cluster mode with pm2. Checkout: https://socket.io/docs/v4/pm
 
 If you are not familiar with pm2: https://pm2.keymetrics.io/docs/usage/quick-start/
 
+# Production
+
+* Set env var `CORS_ORIGIN`
+
 # Development
 
 - install
