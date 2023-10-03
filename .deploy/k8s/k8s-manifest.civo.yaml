@@ -62,7 +62,7 @@ spec:
               paths:
                   - backend:
                         service:
-                            name: gauzy-demo
+                            name: ever-teams-boards-server
                             port:
                                 number: 80
                     path: /
