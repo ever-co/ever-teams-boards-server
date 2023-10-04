@@ -1,4 +1,3 @@
-
 # Ever Teams Boards Server
 
 This repo is a modified fork of https://github.com/excalidraw/excalidraw-room (Copyright (c) 2020 Excalidraw, [MIT license](https://github.com/excalidraw/excalidraw-room/blob/master/LICENSE))
@@ -11,7 +10,7 @@ If you are not familiar with pm2: https://pm2.keymetrics.io/docs/usage/quick-sta
 
 # Production
 
-* Set env var `CORS_ORIGIN`
+- Set env var `CORS_ORIGIN`
 
 # Development
 

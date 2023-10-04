@@ -2,76 +2,76 @@
 kind: Service
 apiVersion: v1
 metadata:
-    name: ever-teams-boards-server
+  name: ever-teams-boards-server
 spec:
-    selector:
-        app: ever-teams-boards-server
-    ports:
-        - name: web
-          protocol: TCP
-          port: 80
-          targetPort: 80
+  selector:
+    app: ever-teams-boards-server
+  ports:
+    - name: web
+      protocol: TCP
+      port: 80
+      targetPort: 80
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: ever-teams-boards-server
+  name: ever-teams-boards-server
 spec:
-    replicas: 1
-    selector:
-        matchLabels:
-            app: ever-teams-boards-server
-    template:
-        metadata:
-            labels:
-                app: ever-teams-boards-server
-        spec:
-            containers:
-                - name: ever-teams-boards-server
-                  image: ghcr.io/ever-co/ever-teams-boards-server:latest
-                  env:
-                      - name: NODE_ENV
-                        value: 'production'
-                      - name: CORS_ORIGIN
-                        value: '*'
-                      - name: PORT
-                        value: '80'
-                  ports:
-                      - containerPort: 80
-                        protocol: TCP
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ever-teams-boards-server
+  template:
+    metadata:
+      labels:
+        app: ever-teams-boards-server
+    spec:
+      containers:
+        - name: ever-teams-boards-server
+          image: ghcr.io/ever-co/ever-teams-boards-server:latest
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: CORS_ORIGIN
+              value: "*"
+            - name: PORT
+              value: "80"
+          ports:
+            - containerPort: 80
+              protocol: TCP
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-    name: https-redirect
+  name: https-redirect
 spec:
-    redirectScheme:
-        permanent: true
-        scheme: https
+  redirectScheme:
+    permanent: true
+    scheme: https
 
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-    name: ever-teams-boards-server
-    namespace: default
-    annotations:
-        kubernetes.io/ingress.class: traefik
+  name: ever-teams-boards-server
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: traefik
 spec:
-    rules:
-        - host: apiboard.ever.team
-          http:
-              paths:
-                  - backend:
-                        service:
-                            name: ever-teams-boards-server
-                            port:
-                                number: 80
-                    path: /
-                    pathType: Prefix
-    tls:
-        - hosts:
-              - apiboard.ever.team
-          secretName: apiboard.ever.team.co-tls
+  rules:
+    - host: apiboard.ever.team
+      http:
+        paths:
+          - backend:
+              service:
+                name: ever-teams-boards-server
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - apiboard.ever.team
+      secretName: apiboard.ever.team.co-tls
