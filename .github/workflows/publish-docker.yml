@@ -6,8 +6,8 @@ on:
       - master
 
 concurrency:
-    group: ${{ github.ref }}-${{ github.workflow }}
-    cancel-in-progress: true
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
 
 jobs:
   publish-docker:
@@ -30,57 +30,57 @@ jobs:
           load: true
           platforms: linux/amd64
           tags: |
-             everco/ever-teams-boards-server:latest
-             ghcr.io/ever-co/ever-teams-boards-server:latest  
-             registry.digitalocean.com/ever/ever-teams-boards-server:latest
-             ${{ secrets.CW_DOCKER_REGISTRY }}/ever-co/ever-teams-boards-server:latest
+            everco/ever-teams-boards-server:latest
+            ghcr.io/ever-co/ever-teams-boards-server:latest  
+            registry.digitalocean.com/ever/ever-teams-boards-server:latest
+            ${{ secrets.CW_DOCKER_REGISTRY }}/ever-co/ever-teams-boards-server:latest
           cache-from: type=registry,ref=everco/ever-teams-boards-server:latest
-          cache-to: type=inline          
+          cache-to: type=inline
 
       - name: Docker images list
         run: |
-             sudo docker image list
+          sudo docker image list
 
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
-             username: ${{ secrets.DOCKERHUB_USERNAME }}
-             password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Push to Docker Hub Registry
         run: |
-              docker push everco/ever-teams-boards-server:latest
+          docker push everco/ever-teams-boards-server:latest
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
-             token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Log in to DigitalOcean Container Registry with short-lived credentials
         run: doctl registry login --expiry-seconds 3600
 
       - name: Push to DigitalOcean Registry
         run: |
-           docker push registry.digitalocean.com/ever/ever-teams-boards-server:latest
+          docker push registry.digitalocean.com/ever/ever-teams-boards-server:latest
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
-             registry: ghcr.io
-             username: ${{ github.repository_owner }}
-             password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push to Github Registry
         run: |
-             docker push ghcr.io/ever-co/ever-teams-boards-server:latest
+          docker push ghcr.io/ever-co/ever-teams-boards-server:latest
 
       - name: Login to CW Container Registry
         uses: docker/login-action@v2
         with:
-            registry: ${{ secrets.CW_DOCKER_REGISTRY }}
-            username: ${{ secrets.CW_DOCKER_USER }}
-            password: ${{ secrets.CW_DOCKER_USER_PASSWORD }}
+          registry: ${{ secrets.CW_DOCKER_REGISTRY }}
+          username: ${{ secrets.CW_DOCKER_USER }}
+          password: ${{ secrets.CW_DOCKER_USER_PASSWORD }}
 
       - name: Push to CW Registry
         run: |
-           docker push ${{ secrets.CW_DOCKER_REGISTRY }}/ever-co/ever-teams-boards-server:latest
+          docker push ${{ secrets.CW_DOCKER_REGISTRY }}/ever-co/ever-teams-boards-server:latest
