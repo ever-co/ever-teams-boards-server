@@ -26,14 +26,14 @@
   "name": "excalidraw-portal",
   "prettier": "@excalidraw/prettier-config",
   "scripts": {
-    "build": "tsc",
+    "build": "yarn tsc",
     "fix:code": "yarn test:code --fix",
     "fix:other": "yarn prettier --write",
     "fix": "yarn fix:other && yarn fix:code",
     "prettier": "prettier . --ignore-path=.gitignore",
     "start": "node dist/index.js",
     "start:dev": "cross-env NODE_ENV=development DEBUG=* ts-node-dev --respawn --transpile-only src/index.ts",
-    "test:code": "eslint --ext .ts .",
+    "test:code": "yarn eslint --ext .ts .",
     "test:other": "yarn prettier --list-different",
     "test": "yarn test:other && yarn test:code"
   },
