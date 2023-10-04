@@ -33,6 +33,10 @@ spec:
                   env:
                       - name: NODE_ENV
                         value: 'production'
+                      - name: CORS_ORIGIN
+                        value: '*'
+                      - name: PORT
+                        value: '80'
                   ports:
                       - containerPort: 80
                         protocol: TCP
