@@ -3,7 +3,7 @@ ARG NODE_ENV
 ARG PORT
 ARG CORS_ORIGIN
 
-FROM node:12-alpine
+FROM node:16-alpine
 
 LABEL maintainer="ever@ever.co"
 LABEL org.opencontainers.image.source https://github.com/ever-co/ever-teams-boards-server
